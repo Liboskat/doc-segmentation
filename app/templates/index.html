@@ -1,0 +1,97 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Doc segmentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+
+</head>
+
+<body>
+<div class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <div class="ms-3">
+        <a class="navbar-brand" href="#">Document segmentation</a>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row mt-2 gx-2">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="model"
+                                   class="form-label">Модель сегментации</label>
+                            <select class="form-select" id="model" name="model" aria-label="Default select example">
+                                {% for key, name in model_names.items() %}
+                                {% if selected_model == key %}
+                                <option value="{{key}}" selected>{{name}}</option>
+                                {% else %}
+                                <option value="{{key}}">{{name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="file_to_segment">Изображение для сегментации</label>
+                            <input type="file" class="form-control" id="file_to_segment" name="file_to_segment"/>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Сегментировать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            {% if image_links %}
+            <div class="card">
+                <div class="card-body">
+                    <img class="mb-2 rounded" src="{{ url_for('static', filename = tmp_dir + image_links['ft']) }}" alt="none"/>
+                    <br>
+                    <a class="btn btn-primary" href="/api/v1/download/{{image_links['ff']}}">Загрузить без легенд</a>
+                    <a class="btn btn-primary" href="/api/v1/download/{{image_links['ft']}}">Загрузить с легендами</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-4 me-auto">
+            {% if image_links %}
+            <div class="card">
+                <div class="card-body">
+                    <img class="mb-2 rounded" src="{{ url_for('static', filename = tmp_dir + image_links['tt']) }}" alt="none"/>
+                    <br>
+                    <a class="btn btn-primary" href="/api/v1//download/{{image_links['tf']}}">Загрузить без легенд</a>
+                    <a class="btn btn-primary" href="/api/v1//download/{{image_links['tt']}}">Загрузить с легендами</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
